@@ -1,0 +1,29 @@
+namespace compat;
+table Record {
+  enabled:bool = true (id:0);
+  i8:byte = -12 (id:1);
+  u8:ubyte = 250 (id:2);
+  i16:short = -1234 (id:3);
+  u16:ushort = 60000 (id:4);
+  i32:int = -1234567 (id:5);
+  u32:uint = 4000000000 (id:6);
+  i64:long = -9000000000000000000 (id:7);
+  u64:ulong = 9000000000000000000 (id:8);
+  f32:float = 1.25 (id:9);
+  f64:double = 1.23456789012345 (id:10);
+  text:string (id:11);
+  flags:[bool] (id:12);
+  bytes:[ubyte] (id:13);
+  signed_bytes:[byte] (id:14);
+  shorts:[short] (id:15);
+  ushorts:[ushort] (id:16);
+  ints:[int] (id:17);
+  uints:[uint] (id:18);
+  longs:[long] (id:19);
+  ulongs:[ulong] (id:20);
+  floats:[float] (id:21);
+  doubles:[double] (id:22);
+  removed:int (id:23, deprecated);
+}
+root_type Record;
+file_identifier "TEST";

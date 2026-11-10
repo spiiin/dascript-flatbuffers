@@ -1,0 +1,34 @@
+name: FlatBuffers compatibility
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  compatibility:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/checkout@v4
+        with:
+          repository: GaijinEntertainment/daScript
+          ref: 9d10b518aa01ca1f361d12d17cd03b324f9b96a5
+          submodules: recursive
+          path: .tools/daScript
+      - name: Configure daScript
+        run: >-
+          cmake -S .tools/daScript -B .tools/das-build -DCMAKE_BUILD_TYPE=Release
+          -DDAS_FLEX_BISON_DISABLED=ON -DDAS_AOT_EXAMPLES_DISABLED=ON
+          -DDAS_TUTORIAL_DISABLED=ON -DDAS_TESTS_DISABLED=ON
+          -DDAS_HV_DISABLED=ON -DDAS_GLFW_DISABLED=ON -DDAS_IMGUI_DISABLED=ON
+          -DDAS_AUDIO_DISABLED=ON -DDAS_STDDLG_DISABLED=ON -DDAS_VULKAN_DISABLED=ON
+          -DDAS_CLIPBOARD_DISABLED=ON -DDAS_TREE_SITTER_DISABLED=ON
+      - run: cmake --build .tools/das-build --config Release --target daslang --parallel 2
+      - run: python tools/bootstrap_sources.py
+      - name: Build adapter and run both suites
+        run: python tools/ci_test.py

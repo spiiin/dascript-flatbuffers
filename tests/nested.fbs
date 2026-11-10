@@ -1,0 +1,39 @@
+namespace world;
+
+enum Color:short { Red=-3, None=0, Green=2, Blue=300 }
+enum Tiny:ubyte { None=0, Max=255 }
+enum Wide:ulong { None=0, High=18446744073709551615 }
+
+struct Vec {
+  x:float;
+  tag:ubyte;
+  color:Color;
+}
+struct Pose (force_align:16) {
+  tag:ubyte;
+  pos:Vec;
+  weight:double;
+  code:short;
+}
+table Item {
+  name:string (id:0);
+  power:int=7 (id:1);
+  color:Color=Green (id:2);
+}
+table Loadout {
+  item:Item (id:0, required);
+  history:[Item] (id:1);
+}
+table Scene {
+  loadout:Loadout (id:0);
+  pose:Pose (id:1);
+  items:[Item] (id:2);
+  poses:[Pose] (id:3);
+  color:Color=Blue (id:4);
+  colors:[Color] (id:5);
+  tiny:Tiny=Max (id:6);
+  wide:Wide=None (id:7);
+  wides:[Wide] (id:8);
+}
+root_type Scene;
+file_identifier "NEST";

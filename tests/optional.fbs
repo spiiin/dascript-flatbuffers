@@ -1,0 +1,15 @@
+namespace presence;
+table Leaf { value:int = 11 (id:0); }
+table Child {
+  power:int = 7 (id:0);
+  values:[int] (id:1);
+  leaf:Leaf (id:2);
+}
+table Envelope {
+  child:Child (id:0);
+  mandatory:Child (id:1, required);
+  children:[Child] (id:2);
+  sibling:Child (id:3);
+}
+root_type Envelope;
+file_identifier "OPTN";
