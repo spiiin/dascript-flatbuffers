@@ -92,3 +92,7 @@ The suites compare generated schemas and buffers with official `flatc` and C++ r
 - Views are generic and schema-driven; typed accessors and AOT benchmarks are not provided.
 
 See the official FlatBuffers [schema guide](https://flatbuffers.dev/schema/) and [wire format guide](https://flatbuffers.dev/internals/).
+
+## License
+
+MIT. See [LICENSE](LICENSE). The bundled `third_party/flatbuffers` files retain their own license and notice.
